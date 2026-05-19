@@ -1,0 +1,81 @@
+<?php
+// ============================================================================
+// File:    MediaListItemDTO.php
+// Author:  Recep Seymen Konuk <konukrecepseymen@gmail.com>
+//
+// Licensed under the terms of the LICENSE file in the project root directory.
+// ============================================================================
+
+namespace Seymen\PhpMvcTemplate\DTO;
+
+
+use DateTime;
+
+use Seymen\PhpMvcTemplate\Config\DefaultImageConfig;
+use Seymen\PhpMvcTemplate\Enums\VideoType;
+use Seymen\PhpMvcTemplate\Helpers\NumberHelper;
+use Seymen\PhpMvcTemplate\Helpers\TimeHelper;
+use Seymen\PhpMvcTemplate\Models\Media;
+
+
+/**
+ * @property VideoType          $type
+ * @property ?int               $order
+ * @property string             $url
+ * @property string             $title
+ * @property string             $thumbnail
+ * @property string             $channelUrl
+ * @property string             $channelTitle
+ * @property string             $channelAvatar
+ * @property int                $duration
+ * @property string             $durationFormatted
+ * @property int                $viewCount
+ * @property string             $viewCountFormatted
+ * @property DateTime|string    $date
+ * @property string             $dateFormatted
+ */
+class MediaListItemDTO
+{
+    private function __construct(
+        private VideoType           $type,
+        private ?int                $order,
+        private string              $url,
+        private string              $title,
+        private string              $thumbnail,
+        private string              $channelUrl,
+        private string              $channelTitle,
+        private string              $channelAvatar,
+        private int                 $duration,
+        private string              $durationFormatted,
+        private int                 $viewCount,
+        private string              $viewCountFormatted,
+        private DateTime|string     $date,
+        private string              $dateFormatted,
+    ) {}
+
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+
+    public static function fromModel(?int $order, string $url, string $channelUrl, Media $media): self
+    {
+        $type = VideoType::from($media->type);
+        return new self(
+            $type,
+            $order ?? null,
+            $url,
+            $media->title,
+            $media->thumbnail ?? $type->defaultThumbnail(),
+            $channelUrl,
+            $media->channel_title,
+            $media->channel_avatar ?? DefaultImageConfig::DEFAULT_CHANNEL_AVATAR,
+            $media->duration,
+            TimeHelper::formatHms($media->duration),
+            $media->view_count,
+            NumberHelper::formatNumber($media->view_count),
+            $media->date,
+            TimeHelper::formatTime($media->date),
+        );
+    }
+}

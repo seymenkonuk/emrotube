@@ -1,0 +1,19 @@
+<?php
+// ============================================================================
+// File:    OfflineController.php
+// Author:  Recep Seymen Konuk <konukrecepseymen@gmail.com>
+//
+// Licensed under the terms of the LICENSE file in the project root directory.
+// ============================================================================
+
+namespace Seymen\PhpMvcTemplate\Controllers;
+
+use Seymen\PhpMvcTemplate\Core\Controller;
+
+class OfflineController extends Controller
+{
+    public function IndexPage()
+    {
+        return $this->View("/offline");
+    }
+}

@@ -1,0 +1,156 @@
+-------------------------------------------GET İSTEKLERİ-------------------------------------------
+GET		/																	-> Ana sayfa (video, müzik, shorts karışık)
+
++GET		/categories															-> Tüm kategoriler listesi
++GET		/categories/{id}													-> Kategoriyi görüntüle
+
++GET		/playlists															-> Oynatma listeleri listesi
++GET		/playlists/{id}														-> Oynatma listesini görüntüle
+
++GET		/videos																-> Videolar listesi
+GET		/videos/{id}?playlist={p_id}&index={index}&t={time}					-> Video izle
+
++GET		/shorts																-> Shorts listesi
+GET		/shorts/{id}?playlist={p_id}&index={index}&t={time}					-> Shorts izle
+
++GET		/musics																-> Müzik listesi
+GET		/musics/{id}?playlist={p_id}&index={index}&t={time}					-> Müzik izle
+
++GET		/channels															-> Tüm kanalların listesi
++GET		/channels/{id}														-> Kanal ana sayfası
++GET		/channels/{id}/videos												-> Kanalın videoları
++GET		/channels/{id}/shorts												-> Kanalın shortları
++GET		/channels/{id}/musics												-> Kanalın müzikleri
++GET		/channels/{id}/playlists											-> Kanalın oynatma listeleri
+GET		/channels/{id}/subscriptions										-> Kanalın abone olduğu diğer kanallar
++GET		/channels/{id}/details												-> Kanalın açıklaması
+
+GET		/feed																-> Size özel (video, müzik, shorts karışık)
+GET		/feed/channels														-> Abone olduğum kanallar
+GET		/feed/subscriptions													-> Abone olduğum kanalların paylaşımları
+GET		/feed/comments														-> Yaptığım yorumlar
+GET		/feed/playlists														-> Oynatma listelerim
+GET		/feed/watch-later													-> Daha sonra izle
+GET		/feed/history														-> Geçmiş
+GET		/feed/liked															-> Beğenilenler
+
+GET		/studio																-> Yönetim paneli ana sayfa (dashboard)
+GET		/studio/channels													-> Kanal yönetim listesi
+GET		/studio/videos														-> Video yönetim listesi
+GET		/studio/shorts														-> Shorts yönetim listesi
+GET		/studio/musics														-> Müzik yönetim listesi
+GET		/studio/playlists													-> Playlist yönetim listesi
+
++GET		/login															-> Giriş
++GET		/register														-> Kayıt
+
++GET		/studio/users/{id}/edit												-> Kullanıcı düzenleme
++GET		/studio/users/{id}/change-password									-> Parola değiştirme
+
++GET		/studio/channels/new												-> Yeni kanal oluşturma
++GET		/studio/channels/{id}/edit											-> Kanal düzenleme (açıklama, pp vb)
+
++GET		/studio/playlists/new												-> Yeni playlist oluşturma
++GET		/studio/playlists/{id}/edit											-> Playlist düzenleme
+
++GET		/studio/videos/new													-> Yeni video yükleme
++GET		/studio/videos/{id}/edit											-> Video düzenleme
+
++GET		/studio/shorts/new													-> Yeni shorts yükleme
++GET		/studio/shorts/{id}/edit											-> Shorts düzenleme
+
++GET		/studio/musics/new													-> Yeni müzik yükleme
++GET		/studio/musics/{id}/edit											-> Müzik düzenleme
+
+GET		/studio/videos/{id}/caption/new
+GET		/studio/shorts/{id}/caption/new
+GET		/studio/musics/{id}/caption/new
+GET		/studio/caption/{id}/edit
+
+GET		/search?q={string}&category={id}&channel={name}
+			&type={video|music|short|channel|playlist}
+			&duration={short(0-4)|medium(4-20)|long(20+)}
+			&sort={views|recent|rating|duration}
+			&date={today|week|month|year}									-> Arama sonuçları, filtreler
+
+-------------------------------------------POST İSTEKLERİ-------------------------------------------
+POST	/register
+POST	/login
+POST	/logout
+
+POST	/studio/users/{id}/edit
+POST	/studio/users/{id}/change-password
+POST	/studio/users/{id}/delete
+POST	/studio/users/{id}/active-channel
+
+POST	/studio/channels/new												-> 
+POST	/studio/channels/{id}/edit											-> 
+POST	/studio/channels/{id}/delete										-> 
+POST	/studio/channels/{id}/change-avatar									-> 
+POST	/studio/channels/{id}/change-banner									-> 
+POST	/channels/{id}/subscribe											-> abone ol
+POST	/channels/{id}/unsubscribe											-> abone ol
+
+POST	/studio/videos/new													-> 
+POST	/studio/videos/{id}/edit											-> 
+POST	/studio/videos/{id}/delete											-> 
+POST	/studio/videos/{id}/change-thumbnail								-> 
+POST	/videos/{id}/like													-> 
+POST	/videos/{id}/dislike												-> 
+POST	/videos/{id}/watch-later											-> 
+
+POST	/studio/shorts/new													-> 
+POST	/studio/shorts/{id}/edit											-> 
+POST	/studio/shorts/{id}/delete											-> 
+POST	/studio/shorts/{id}/change-thumbnail								-> 
+POST	/shorts/{id}/like													-> 
+POST	/shorts/{id}/dislike												-> 
+POST	/shorts/{id}/watch-later											-> 
+
+POST	/studio/musics/new													-> 
+POST	/studio/musics/{id}/edit											-> 
+POST	/studio/musics/{id}/delete											-> 
+POST	/studio/musics/{id}/change-thumbnail								-> 
+POST	/musics/{id}/like													-> 
+POST	/musics/{id}/dislike												-> 
+POST	/musics/{id}/watch-later											-> 
+
+POST	/studio/videos/{id}/caption/new
+POST	/studio/shorts/{id}/caption/new
+POST	/studio/musics/{id}/caption/new
+POST	/studio/caption/{id}/edit
+POST	/studio/caption/{id}/delete
+
+POST	/studio/playlists/new												-> 
+POST	/studio/playlists/{id}/edit											-> 
+POST	/studio/playlists/{id}/delete										-> 
+POST	/studio/playlists/{id}/change-banner								-> 
+POST	/playlists/{id}/remove/{id}											-> 
+POST	/videos/{id}/addlist												-> 
+POST	/shorts/{id}/addlist												->  
+POST	/musics/{id}/addlist												-> 
+
+POST	/videos/{id}/comment												->
+POST	/shorts/{id}/comment												-> 
+POST	/musics/{id}/comment												-> 
+POST	/comments/{id}/edit													-> 
+POST	/comments/{id}/delete												-> 
+POST	/comments/{id}/like													-> 
+POST	/comments/{id}/dislike												-> 
+-------------------------------------------DOSYA İSTEKLERİ-------------------------------------------
+GET		/uploads/channels/{id}/avatars/{file_name}
+GET		/uploads/channels/{id}/banners/{file_name}
+GET		/uploads/playlists/{id}/banners/{file_name}
+GET		/uploads/videos/{id}/{file_name}
+GET		/uploads/videos/{id}/thumbnails/{file_name}
+GET		/uploads/videos/{id}/captions/{file_name}
+GET		/uploads/shorts/{id}/{file_name}
+GET		/uploads/shorts/{id}/thumbnails/{file_name}
+GET		/uploads/shorts/{id}/captions/{file_name}
+GET		/uploads/musics/{id}/{file_name}
+GET		/uploads/musics/{id}/thumbnails/{file_name}
+GET		/uploads/musics/{id}/captions/{file_name}
+GET		/uploads/categories/{id}/banners/{file_name}
+-------------------------------------------DİĞER İSTEKLER-------------------------------------------
+GET		/offline
+POST	/notifications/subscribe

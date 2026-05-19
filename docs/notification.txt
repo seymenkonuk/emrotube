@@ -1,0 +1,56 @@
+
+<?php
+require __DIR__ . '/vendor/autoload.php';
+use Minishlink\WebPush\WebPush;
+use Minishlink\WebPush\Subscription;
+
+$publicKey = '<VAPID_PUBLIC_KEY>';
+$privateKey = '<VAPID_PRIVATE_KEY>';
+
+// DB bağlantısı
+$db = new PDO("mysql:host=localhost;dbname=test","root","");
+
+// Örnek: yeni veri eklenen kullanıcılar
+$stmt = $db->query("SELECT user_id, subscription FROM subscriptions");
+$subs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$auth = [
+    'VAPID' => [
+        'subject' => 'mailto:you@example.com',
+        'publicKey' => $publicKey,
+        'privateKey' => $privateKey,
+    ],
+];
+
+$webPush = new WebPush($auth);
+
+// Tüm abonelere gönder
+foreach($subs as $row){
+    $subscription = Subscription::create(json_decode($row['subscription'], true));
+    $message = "Merhaba kullanıcı {$row['user_id']}, veritabanına yeni veri eklendi!";
+    $webPush->sendOneNotification($subscription, $message);
+}
+
+echo "Push gönderildi!";
+
+<?php
+session_start();
+$user_id = $_SESSION['user_id'] ?? null; // Oturumdaki kullanıcı
+
+if (!$user_id) {
+    http_response_code(403);
+    exit("Login required");
+}
+
+$data = json_decode(file_get_contents('php://input'), true);
+
+// DB’de sakla (örnek: subscriptions tablosu)
+// user_id ile ilişkilendir
+$db = new PDO("mysql:host=localhost;dbname=test","root","");
+$stmt = $db->prepare("REPLACE INTO subscriptions (user_id, subscription) VALUES (:uid, :sub)");
+$stmt->execute([
+    ':uid' => $user_id,
+    ':sub' => json_encode($data)
+]);
+
+http_response_code(201);

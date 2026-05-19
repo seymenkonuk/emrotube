@@ -1,0 +1,20 @@
+{
+    "name": "seymen/php-mvc-template",
+    "autoload": {
+        "psr-4": {
+            "Seymen\\PhpMvcTemplate\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Recep Seymen Konuk",
+            "email": "konukrecepseymen@gmail.com"
+        }
+    ],
+    "require": {
+        "league/plates": "^3.6",
+        "voku/html-min": "^4.5",
+        "predis/predis": "^3.2",
+        "minishlink/web-push": "^9.0"
+    }
+}
